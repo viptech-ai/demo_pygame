@@ -9,6 +9,8 @@ import pygame
 pygame.font.init()
 pygame.mixer.init()
 
+WELCOME_TEXT = "Learning / Showcase Purpose - Vipul Tawde."
+
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Demo Game")
@@ -44,6 +46,7 @@ RED_HIT = pygame.USEREVENT + 2
 
 HEALTH_FONT = pygame.font.SysFont('comicsans', 40)
 WINNER_FONT = pygame.font.SysFont('comicsans', 100)
+WELCOME_FONT = pygame.font.SysFont('comicsans', 40)
 
 BULLET_FIRE_SOUND = pygame.mixer.Sound(os.path.join('Assets', 'Gun+Silencer.mp3'))
 BULLET_HIT_SOUND = pygame.mixer.Sound(os.path.join('Assets', 'Grenade+1.mp3'))
@@ -104,19 +107,25 @@ def draw_winner(text):
     pygame.time.delay(5000)
 
 
+def draw_welcome_page(text):
+    welcome_text = WELCOME_FONT.render(text, 1, YELLOW)
+    WIN.blit(welcome_text, (WIDTH / 2 - welcome_text.get_width() / 2, HEIGHT / 2 - welcome_text.get_height() / 2))
+    pygame.display.update()
+    pygame.time.delay(5000)
+
+
 def draw_window(red_p, ylw_p, red_bullets, ylw_bullets, red_health, ylw_health):
     # WIN.fill(WHITE)  # Clears previous images
     WIN.blit(SPACE, (0, 0))
     pygame.draw.rect(WIN, BLACK, BORDER)
-
     red_health_text = HEALTH_FONT.render("HEALTH: " + str(red_health), 1, WHITE)
     ylw_health_text = HEALTH_FONT.render("HEALTH: " + str(ylw_health), 1, WHITE)
     WIN.blit(red_health_text, (WIDTH - red_health_text.get_width() - 10, 10))
     WIN.blit(ylw_health_text, (10, 10))
 
     # Comment Me
-    pygame.draw.rect(WIN, RED, ylw_p)
-    pygame.draw.rect(WIN, YELLOW, red_p)
+    # pygame.draw.rect(WIN, RED, ylw_p)
+    # pygame.draw.rect(WIN, YELLOW, red_p)
 
     WIN.blit(YLW_SS, ylw_p)
     WIN.blit(RED_SS, red_p)
@@ -131,6 +140,7 @@ def draw_window(red_p, ylw_p, red_bullets, ylw_bullets, red_health, ylw_health):
 
 def main():
     # init_bg()
+    draw_welcome_page(WELCOME_TEXT)
     init_ss()
     red_p = pygame.Rect(RED_SS_POS, (SS_SIZE[1], SS_SIZE[0]))
     ylw_p = pygame.Rect(YLW_SS_POS, (SS_SIZE[1], SS_SIZE[0]))
